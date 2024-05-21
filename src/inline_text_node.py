@@ -3,7 +3,7 @@ from text_node import TextNode
 from text_types import TextType
 
 
-class InlineTextNodes:
+class InlineTextNode:
 
     REGX_IMAGE = r"!\[(.*?)\]\((.*?)\)"
     REGX_LINK = r"\[(.*?)\]\((.*?)\)"
@@ -31,7 +31,7 @@ class InlineTextNodes:
         return final_nodes
     
     def extract_markdown_images(text):
-        return re.findall(InlineTextNodes.REGX_IMAGE, text)
+        return re.findall(InlineTextNode.REGX_IMAGE, text)
     
     def extract_markdown_links(text):
-        return re.findall(InlineTextNodes.REGX_LINK, text)
+        return re.findall(InlineTextNode.REGX_LINK, text)
