@@ -8,7 +8,7 @@ class TextNode:
                  url=None):
         if text_type.lower() not in TextType.TYPES:
             raise ValueError(f"Text type {text_type.lower()} is not supported.")
-        self.text_type = TextType.TYPES[TextType.TYPES.index(text_type.lower())]
+        self.text_type = text_type.lower()
         self.text = text
         self.url = url
 
@@ -35,3 +35,8 @@ class TextNode:
             return LeafNode(tag="img", value="", props={"src": self.url,
                                                         "alt": self.text}).to_html()
     
+    
+                    
+
+
+
