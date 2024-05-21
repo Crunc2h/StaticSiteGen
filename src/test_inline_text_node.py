@@ -23,7 +23,64 @@ class TestInlineTextNode(unittest.TestCase):
                                    text_type=TextType.RAW_TEXT)], InlineTextNode.split_nodes_delimiter(test_nodes, 
                                                                                                        "`", 
                                                                                                        TextType.CODE))
-    
+        
+    def test_split_nodes_image_and_link(self):
+        image_and_link_mixed = TextNode(text="""This is text with an\
+![image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png)\
+and\
+![another](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/dfsdkjfd.png) AAAAND\
+[this is def link](https://google.com)""",
+                                        text_type=TextType.RAW_TEXT)
+        link = TextNode(text="A text with a link [test_link](https://test_link_url.com)",
+                        text_type=TextType.RAW_TEXT)
+        broken_image = TextNode(text="![test_image](https://unclosed_image_url.com",
+                                text_type=TextType.RAW_TEXT)
+        broken_link = TextNode(text="[unclosed_link_anchor(https://test_link_url.com)",
+                               text_type=TextType.RAW_TEXT)
+        code = TextNode(text="`python ./test.sh`",
+                        text_type=TextType.CODE)
+        empty = TextNode(text="", 
+                         text_type=TextType.RAW_TEXT)
+        null = TextNode(text=None, 
+                        text_type=TextType.RAW_TEXT)
+        
+        case_1 = [image_and_link_mixed, null, broken_image, code, empty]
+        case_2 = [image_and_link_mixed, link, null, code, broken_image]
+        self.maxDiff = None
+        self.assertEqual([TextNode(text="This is text with an",
+                                   text_type=TextType.RAW_TEXT),
+                          TextNode(text="image",
+                                   text_type=TextType.IMAGE,
+                                   url="https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png"),
+                          TextNode(text="and",
+                                   text_type=TextType.RAW_TEXT),  
+                          TextNode(text="another",
+                                   text_type=TextType.IMAGE,
+                                   url="https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/dfsdkjfd.png"),
+                          TextNode(text=" AAAAND[this is def link](https://google.com)",
+                                   text_type=TextType.RAW_TEXT),
+                          null,
+                          broken_image,
+                          code,
+                          empty], InlineTextNode.split_nodes_image(case_1))
+        
+        self.assertEqual([TextNode(text="""This is text with an\
+![image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png)\
+and\
+![another](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/dfsdkjfd.png) AAAAND""",
+                                   text_type=TextType.RAW_TEXT),
+                          TextNode(text="this is def link",
+                                   text_type=TextType.LINK,
+                                   url="https://google.com"),
+                          TextNode(text="A text with a link ",
+                                   text_type=TextType.RAW_TEXT),
+                          TextNode(text="test_link",
+                                   text_type=TextType.LINK,
+                                   url="https://test_link_url.com"),
+                          null,
+                          code,
+                          broken_image], InlineTextNode.split_nodes_link(case_2))
+
     def test_extract_markdown_images(self):
         test_empty = ""
         test_null = None

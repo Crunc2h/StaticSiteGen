@@ -9,7 +9,7 @@ class TextNode:
         if text_type.lower() not in TextType.TYPES:
             raise ValueError(f"Text type {text_type.lower()} is not supported.")
         self.text_type = text_type.lower()
-        self.text = text
+        self.text = text if text != None else ""
         self.url = url
 
     def __eq__(self, other):

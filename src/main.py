@@ -7,11 +7,7 @@ from text_types import TextType
 import re
 
 
-text = """This is text with an\
-![image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png)\
-and\
-![another](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/dfsdkjfd.png) AAAAND\
-[this is def link](https://google.com)"""
+
 test = TextNode(text=text, text_type=TextType.RAW_TEXT)
 
 

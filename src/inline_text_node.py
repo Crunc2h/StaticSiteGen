@@ -46,7 +46,7 @@ class InlineTextNode:
                 continue
             else:
                 for image_content in image_contents:
-                    content_string = f"[{image_content[0]}]({image_content[1]})"
+                    content_string = f"![{image_content[0]}]({image_content[1]})"
                     sections = original_text.split(content_string, 1)
                     
                     if len(sections) != 2:
