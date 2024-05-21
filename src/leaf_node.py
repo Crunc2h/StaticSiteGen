@@ -1,4 +1,4 @@
-from htmlnode import HTMLNode
+from html_node import HTMLNode
 
 
 class LeafNode(HTMLNode):
@@ -9,6 +9,6 @@ class LeafNode(HTMLNode):
 
     def to_html(self):
         if self.tag is None:
-            return self.value
+            return self.value if self.value != None else ""
         else:
             return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"

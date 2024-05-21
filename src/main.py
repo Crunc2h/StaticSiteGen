@@ -1,5 +1,6 @@
-from textnode import TextNode
-
-print(TextNode(text="testtxt", text_type="testtype", url="Yourmom.com"))
+from text_node import TextNode
+from parent_node import ParentNode
+from leaf_node import LeafNode
+from html_node import HTMLNode
 
 
