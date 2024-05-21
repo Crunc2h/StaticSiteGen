@@ -1,8 +1,13 @@
+import re
 from text_node import TextNode
 from text_types import TextType
 
 
 class InlineTextNodes:
+
+    REGX_IMAGE = r"!\[(.*?)\]\((.*?)\)"
+    REGX_LINK = r"\[(.*?)\]\((.*?)\)"
+
     
     def split_nodes_delimiter(old_nodes, delimiter, target_text_type):
         final_nodes = []
@@ -24,3 +29,9 @@ class InlineTextNodes:
                             final_nodes.append(TextNode(text=text_pieces[i],
                                                         text_type=target_text_type))
         return final_nodes
+    
+    def extract_markdown_images(text):
+        return re.findall(InlineTextNodes.REGX_IMAGE, text)
+    
+    def extract_markdown_links(text):
+        return re.findall(InlineTextNodes.REGX_LINK, text)
