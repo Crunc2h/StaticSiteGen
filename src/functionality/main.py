@@ -1,15 +1,4 @@
-from text_node import TextNode
-from parent_node import ParentNode
-from leaf_node import LeafNode
-from html_node import HTMLNode
-from inline_text_node import InlineTextNode
-from text_types import TextType
-from block_markdown import BlockMarkdown
-import re
-
-
-
-from block_types import BlockTypes
+from functionality.block_markdown import BlockMarkdown
 
 
 md = """Headlines are simply done with hash chars like this:
@@ -24,7 +13,6 @@ md = """Headlines are simply done with hash chars like this:
 #### Fourth Level Headline
 
 ##### `Fifth Level` Headline
-[image]a broken image link)
 
 ###### Sixth Level Headline
 

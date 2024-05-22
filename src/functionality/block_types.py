@@ -11,5 +11,4 @@ class BlockTypes:
         CODE,
         QUOTE,
         UNORDERED_LIST,
-        ORDERED_LIST
-    ]
+        ORDERED_LIST]
