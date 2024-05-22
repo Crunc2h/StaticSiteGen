@@ -4,6 +4,34 @@ from inline_text_node import InlineTextNode
 from text_node import TextNode
 class TestInlineTextNode(unittest.TestCase):
     
+    def test_text_to_text_nodes(self):
+        case_1 = """This is **text** with an *italic* word and a `code block` and an\
+![image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and a [link](https://boot.dev)"""
+        case_2 = "**Hey bro this isn't bold as you can see it ain't clo`sed`. although you can check out this [link](asdf)"
+        self.assertEqual([TextNode(text="This is ",
+                                   text_type=TextType.RAW_TEXT),
+                          TextNode(text="text",
+                                   text_type=TextType.BOLD),
+                          TextNode(text=" with an ",
+                                   text_type=TextType.RAW_TEXT),
+                          TextNode(text="italic",
+                                   text_type=TextType.ITALIC),
+                          TextNode(text=" word and a ",
+                                   text_type=TextType.RAW_TEXT),
+                          TextNode(text="code block",
+                                   text_type=TextType.CODE),
+                          TextNode(text=" and an",
+                                   text_type=TextType.RAW_TEXT),
+                          TextNode(text="image",
+                                   text_type=TextType.IMAGE,
+                                   url="https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png"),
+                          TextNode(text=" and a ",
+                                   text_type=TextType.RAW_TEXT),
+                          TextNode(text="link",
+                                   text_type=TextType.LINK,
+                                   url="https://boot.dev")], InlineTextNode.text_to_text_nodes(case_1))
+        self.assertRaises(ValueError, InlineTextNode.text_to_text_nodes, case_2)
+
     def test_split_nodes_delimiter(self):
         test_nodes = [TextNode(text="This is a test node with `python ./main.sh` code inside.",
                                text_type=TextType.RAW_TEXT),

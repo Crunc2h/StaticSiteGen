@@ -7,8 +7,22 @@ class InlineTextNode:
 
     REGX_IMAGE = r"!\[(.*?)\]\((.*?)\)"
     REGX_LINK = r"(?<!!)\[(.*?)\]\((.*?)\)"
+    TEXT_DELIMITERS = [("**", TextType.BOLD),
+                       ("*", TextType.ITALIC),
+                       ("`", TextType.CODE)]
 
-    
+    def text_to_text_nodes(text):
+        root = TextNode(text=text,
+                        text_type=TextType.RAW_TEXT)
+        all_nodes = [root]
+        for delimiter, text_type in InlineTextNode.TEXT_DELIMITERS:
+            result_nodes = InlineTextNode.split_nodes_delimiter(all_nodes, delimiter, text_type)
+            all_nodes = result_nodes.copy()
+        all_nodes = InlineTextNode.split_nodes_image(all_nodes)
+        all_nodes = InlineTextNode.split_nodes_link(all_nodes)
+
+        return all_nodes
+        
     def split_nodes_delimiter(old_nodes, delimiter, target_text_type):
         final_nodes = []
         for node in old_nodes:

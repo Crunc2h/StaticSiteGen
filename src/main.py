@@ -8,21 +8,10 @@ import re
 
 
 
-test = TextNode(text=text, text_type=TextType.RAW_TEXT)
 
-
-
-
-
-
-
-
-
-
-for image in InlineTextNode.split_nodes_image([test]):
-    print(image)
-
-print("-------")
-
-for link in InlineTextNode.split_nodes_link([test]):
-    print(link)
+test = InlineTextNode.text_to_text_nodes(text)
+for t in test:
+    print(t)
+"""
+print(InlineTextNode.split_nodes_delimiter([TextNode(text=text,text_type=TextType.RAW_TEXT)], "**", TextType.BOLD))
+"""
