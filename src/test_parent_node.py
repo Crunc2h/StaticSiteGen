@@ -34,7 +34,8 @@ class TestParentNode(unittest.TestCase):
 <p1>lnode</p1>\
 </h1>""")
 
-
+if __name__ == "__main__":
+    unittest.main()
 
 
 

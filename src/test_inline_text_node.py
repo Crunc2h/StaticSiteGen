@@ -138,3 +138,6 @@ and\
                           ("another",
                            "https://www.example.com/another")],
                            InlineTextNode.extract_markdown_links(test_link_text))
+        
+if __name__ == "__main__":
+    unittest.main()
