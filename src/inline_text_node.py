@@ -109,12 +109,6 @@ class InlineTextNode:
                     new_nodes.append(TextNode(text=original_text,
                                               text_type=TextType.RAW_TEXT))
         return new_nodes
-                    
-                       
-                    
-
-                
-        return new_nodes
     
     def extract_markdown_images(text):
         return re.findall(InlineTextNode.REGX_IMAGE, text)

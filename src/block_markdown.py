@@ -1,20 +1,83 @@
 from block_types import BlockTypes
-
+from parent_node import ParentNode
+from inline_text_node import InlineTextNode
 class BlockMarkdown:
 
-    def markdown_to_blocks(markdown):
+    def markdown_to_html(md_text):
+        blocks = BlockMarkdown.markdown_to_blocks(md_text)
+        root = ParentNode(tag="div",
+                          children=[BlockMarkdown.block_to_html_switch(block, BlockMarkdown.block_to_block_type(block)) for block in blocks])
+        return root.to_html()
+
+    def block_to_html_switch(block, block_type):
+        if block_type == BlockTypes.PARAGRAPH:
+            return BlockMarkdown.paragraph_to_html(block)
+        elif block_type == BlockTypes.HEADING:
+            return BlockMarkdown.heading_to_html(block)
+        elif block_type == BlockTypes.CODE:
+            return BlockMarkdown.code_to_html(block)
+        elif block_type == BlockTypes.QUOTE:
+            return BlockMarkdown.quote_to_html(block)
+        elif block_type == BlockTypes.ORDERED_LIST:
+            return BlockMarkdown.ordered_list_to_html(block)
+        else:
+            return BlockMarkdown.unordered_list_to_html(block)
+
+    def heading_to_html(heading_block):
+        heading_num = sum([1 for i in range(6) if heading_block[0][i] == '#'])
+        heading_block[0] = heading_block[0][heading_num::]
+        text = ' '.join(heading_block)
+        text_nodes = InlineTextNode.text_to_text_nodes(text)
+        return ParentNode(tag=f"h{heading_num}",
+                          children=text_nodes)
+
+    def quote_to_html(quote_block):
+        text = ' '.join([line.lstrip('>') for line in quote_block])
+        text_nodes = InlineTextNode.text_to_text_nodes(text)
+        return ParentNode(tag="blockquote",
+                          children=text_nodes)
+
+    def unordered_list_to_html(uo_block):
+        block_children = []
+        for line in uo_block:
+            text_nodes = InlineTextNode.text_to_text_nodes(line[2::])
+            block_children.append(ParentNode(tag="li",
+                                             children=text_nodes))
+        return ParentNode(tag="ul",
+                          children=block_children)
+    
+    def ordered_list_to_html(o_block):
+        block_children = []
+        for line in o_block:
+            text_nodes = InlineTextNode.text_to_text_nodes(line[2::])
+            block_children.append(ParentNode(tag="li",
+                                             children=text_nodes))
+        return ParentNode(tag="ol",
+                          children=block_children)
         
-        blocks = markdown.split("\n\n")
-        blocks = [block.strip() for block in blocks if block.strip() != ""]
-        return blocks
+    def code_to_html(code_block):
+        text = ''.join(code_block)
+        filtered_text = code_block[4:-3]
+        text_nodes = InlineTextNode.text_to_text_nodes(filtered_text)
+        code_parent_node = ParentNode(tag="code",
+                                      children=text_nodes)
+        return ParentNode(tag="pre",
+                          children=[code_parent_node])
+    
+    def paragraph_to_html(paragraph_block):
+        text = ' '.join(paragraph_block)
+        text_nodes = InlineTextNode.text_to_text_nodes(text)
+        return ParentNode(tag="p",
+                          children=text_nodes)
+
     
     def block_to_block_type(block):
         found_types = [
-            BlockMarkdown.is_header(block),
-            BlockMarkdown.is_code(block),
-            BlockMarkdown.is_quote(block),
-            BlockMarkdown.is_unordered_list(block),
-            BlockMarkdown.is_ordered_list(block)
+            BlockMarkdown.__is_header(block),
+            BlockMarkdown.__is_code(block),
+            BlockMarkdown.__is_quote(block),
+            BlockMarkdown.__is_unordered_list(block),
+            BlockMarkdown.__is_ordered_list(block)
         ]
            
         if sum([1 for b_type in found_types if b_type == True]) > 1:
@@ -22,17 +85,20 @@ class BlockMarkdown:
         
         return BlockTypes.PARAGRAPH if any(found_types) is False else BlockTypes.BLOCK_TYPES[found_types.index(True)]
     
-    def block_to_html():
-        pass
+    def markdown_to_blocks(markdown):
+        
+        blocks = markdown.split("\n\n")
+        blocks = [block.split('\n') for block in blocks if block.strip() != ""]
+        return blocks
     
-    def is_header(block):
+    def __is_header(block):
         for i in range(1, 7):
             if len(block[0]) >= i + 1:
                 if (i * '#' + ' ') in block[0][:i+1]:
                     return True
         return False
     
-    def is_code(block):
+    def __is_code(block):
         if (len(block[0]) >= 3 
         and len(block[-1]) >= 3
         and block[0][0:3] == "```" 
@@ -40,13 +106,13 @@ class BlockMarkdown:
             return True
         return False
 
-    def is_quote(block):
+    def __is_quote(block):
         for line in block:
             if line.startswith(">") is False:
                 return False
         return True
 
-    def is_unordered_list(block):
+    def __is_unordered_list(block):
         for line in block:
             if len(line) >= 2:
                 if line[0] == "*" or line[0] == "-":
@@ -55,7 +121,7 @@ class BlockMarkdown:
             return False 
         return True
     
-    def is_ordered_list(block):
+    def __is_ordered_list(block):
         for i in range(len(block)):
             line = "".join(map(BlockMarkdown.__filter_ordered_list_char, block[i]))
             
