@@ -1,10 +1,12 @@
 import unittest
-from parent_node import ParentNode
-from leaf_node import LeafNode
+from src.functionality.parent_node import ParentNode
+from src.functionality.leaf_node import LeafNode
 
 
 class TestParentNode(unittest.TestCase):
+    
     def test_parent_node(self):
+        
         leaf_1 = LeafNode(value="lnode", 
                           tag="p1")
         leaf_2 = LeafNode(value="lnode", 
@@ -33,6 +35,7 @@ class TestParentNode(unittest.TestCase):
 </h4>\
 <p1>lnode</p1>\
 </h1>""")
+
 
 if __name__ == "__main__":
     unittest.main()

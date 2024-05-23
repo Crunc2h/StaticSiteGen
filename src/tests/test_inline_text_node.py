@@ -1,10 +1,13 @@
 import unittest
-from text_types import TextType
-from inline_text_node import InlineMarkdown
-from text_node import TextNode
+from src.functionality.text_types import TextType
+from src.functionality.inline_markdown import InlineMarkdown
+from src.functionality.text_node import TextNode
+
+
 class TestInlineTextNode(unittest.TestCase):
     
     def test_text_to_text_nodes(self):
+        
         case_1 = """This is **text** with an *italic* word and a `code block` and an\
 ![image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and a [link](https://boot.dev)"""
         case_2 = "**Hey bro this isn't bold as you can see it ain't clo`sed`. although you can check out this [link](asdf)"
@@ -33,6 +36,7 @@ class TestInlineTextNode(unittest.TestCase):
         self.assertRaises(ValueError, InlineMarkdown.text_to_text_nodes, case_2)
 
     def test_split_nodes_delimiter(self):
+        
         test_nodes = [TextNode(text="This is a test node with `python ./main.sh` code inside.",
                                text_type=TextType.RAW_TEXT),
                       TextNode(text="This is just a normal text node.", 
@@ -53,6 +57,7 @@ class TestInlineTextNode(unittest.TestCase):
                                                                                                        TextType.CODE))
         
     def test_split_nodes_image_and_link(self):
+        
         image_and_link_mixed = TextNode(text="""This is text with an\
 ![image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png)\
 and\
@@ -110,6 +115,7 @@ and\
                           broken_image], InlineMarkdown.split_nodes_link(case_2))
 
     def test_extract_markdown_images(self):
+        
         test_empty = ""
         test_null = None
         test_img_text = """This is text with an\
@@ -125,6 +131,7 @@ and\
                            InlineMarkdown.extract_markdown_images(test_img_text))
     
     def test_extract_markdown_links(self):
+        
         test_empty = ""
         test_null = None
         test_link_text = """This is text with a\

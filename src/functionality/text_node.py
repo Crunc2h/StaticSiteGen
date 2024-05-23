@@ -1,5 +1,5 @@
-from text_types import TextType
-from leaf_node import LeafNode
+from src.functionality.text_types import TextType
+from src.functionality.leaf_node import LeafNode
 
 
 class TextNode:

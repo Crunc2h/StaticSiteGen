@@ -1,4 +1,4 @@
-from html_node import HTMLNode
+from src.functionality.html_node import HTMLNode
 
 
 class LeafNode(HTMLNode):
@@ -21,3 +21,8 @@ class LeafNode(HTMLNode):
             return self.value if self.value != None else ""
         else:
             return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
+        
+    def __eq__(self, other):
+        return (self.value == other.value 
+                and self.tag == other.tag
+                and self.props == other.props)
