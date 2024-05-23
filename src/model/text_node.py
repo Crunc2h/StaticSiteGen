@@ -1,5 +1,5 @@
-from src.enums.text_types import TextType
-from src.model.leaf_node import LeafNode
+from enums.text_types import TextType
+from model.leaf_node import LeafNode
 
 
 class TextNode:

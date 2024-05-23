@@ -1,6 +1,6 @@
-from src.enums.block_types import BlockTypes
-from src.model.parent_node import ParentNode
-from src.conversion.inline_markdown import InlineMarkdown
+from enums.block_types import BlockTypes
+from model.parent_node import ParentNode
+from conversion.inline_markdown import InlineMarkdown
 
 
 class BlockMarkdown:
@@ -8,7 +8,6 @@ class BlockMarkdown:
     def extract_title_from_blocks(blocks):
         for block in blocks:
             for line in block:
-                print(line)
                 if line[0] == '#' and line[1] == ' ':
                     return line[1::]
         raise ValueError("No header found in the markdown file!")

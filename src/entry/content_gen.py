@@ -1,8 +1,9 @@
 from util.path_config import (PUBLIC_DIR,
-                              CONTENT_DIR, 
-                              TEMPLATE_PATH)
+                                  CONTENT_DIR,
+                                  TEMPLATE_PATH)
 from util.file_util import FileUtil
 from conversion.block_markdown import BlockMarkdown
+
 
 
 class ContentGen:
@@ -12,11 +13,10 @@ class ContentGen:
         FileUtil.copy_files_to_dest(src_dir_name=CONTENT_DIR,
                         dst_dir_name=PUBLIC_DIR)
         markdown_file_paths = [file_path for file_path in FileUtil.get_file_paths(CONTENT_DIR) if file_path[-2::] == "md"]
-        print(markdown_file_paths)
+
         for md_file_path in markdown_file_paths:
             dst_path = (PUBLIC_DIR + md_file_path.split(CONTENT_DIR)[1][:-3:] + ".html")
-            print(dst_path)
-            print("=======")
+
             ContentGen.generate_page(from_path=md_file_path,
                         dest_path=dst_path,
                         template_path=TEMPLATE_PATH)

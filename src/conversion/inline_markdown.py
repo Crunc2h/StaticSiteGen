@@ -1,6 +1,6 @@
 import re
-from src.model.text_node import TextNode
-from src.enums.text_types import TextType
+from model.text_node import TextNode
+from enums.text_types import TextType
 
 
 class InlineMarkdown:
