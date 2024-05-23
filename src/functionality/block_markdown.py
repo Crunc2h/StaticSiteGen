@@ -5,13 +5,23 @@ from src.functionality.inline_markdown import InlineMarkdown
 
 class BlockMarkdown:
 
+    def extract_title_from_blocks(blocks):
+        for block in blocks:
+            for line in block:
+                print(line)
+                if line[0] == '#' and line[1] == ' ':
+                    return line[1::]
+        raise ValueError("No header found in the markdown file!")
+
+
     def markdown_to_html(md_text):
         
         blocks = BlockMarkdown.markdown_to_blocks(md_text)
-        root = ParentNode(tag="div",
-                          children=[BlockMarkdown.block_to_html_switch(block, BlockMarkdown.block_to_block_type(block)) for block in blocks])
+        title = BlockMarkdown.extract_title_from_blocks(blocks)
+        content = ParentNode(tag="div",
+                             children=[BlockMarkdown.block_to_html_switch(block, BlockMarkdown.block_to_block_type(block)) for block in blocks])
         
-        return root.to_html()
+        return content.to_html(), title
 
     def block_to_html_switch(block, block_type):
         
@@ -65,7 +75,7 @@ class BlockMarkdown:
         
         block_children = []
         for line in o_block:
-            text_nodes = InlineMarkdown.text_to_text_nodes(line[2::])
+            text_nodes = InlineMarkdown.text_to_text_nodes(line[3::])
             leaf_nodes = [text_node.to_leaf_node() for text_node in text_nodes]
             
             block_children.append(ParentNode(tag="li",
@@ -76,7 +86,7 @@ class BlockMarkdown:
     def code_to_html(code_block):
         
         text = ''.join(code_block)
-        filtered_text = code_block[4:-3]
+        filtered_text = text[4:-3]
         
         text_nodes = InlineMarkdown.text_to_text_nodes(filtered_text)
         leaf_nodes = [text_node.to_leaf_node() for text_node in text_nodes]
