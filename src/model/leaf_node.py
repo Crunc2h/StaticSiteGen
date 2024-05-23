@@ -1,4 +1,4 @@
-from src.functionality.html_node import HTMLNode
+from src.model.html_node import HTMLNode
 
 
 class LeafNode(HTMLNode):

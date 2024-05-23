@@ -1,1 +1,1 @@
-# Hello, this is definetly not a test. 
+# A simple static site generator that can convert markdown files to hmtl

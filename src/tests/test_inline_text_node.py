@@ -1,7 +1,7 @@
 import unittest
-from src.functionality.text_types import TextType
-from src.functionality.inline_markdown import InlineMarkdown
-from src.functionality.text_node import TextNode
+from src.enums.text_types import TextType
+from src.conversion.inline_markdown import InlineMarkdown
+from src.model.text_node import TextNode
 
 
 class TestInlineTextNode(unittest.TestCase):

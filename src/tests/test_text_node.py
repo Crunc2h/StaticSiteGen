@@ -1,7 +1,7 @@
 import unittest
-from src.functionality.text_node import TextNode
-from src.functionality.text_types import TextType
-from src.functionality.leaf_node import LeafNode
+from src.model.text_node import TextNode
+from src.model.leaf_node import LeafNode
+from src.enums.text_types import TextType
 
 
 class TestTExtNode(unittest.TestCase):

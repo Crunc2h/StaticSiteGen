@@ -1,6 +1,6 @@
-from src.functionality.block_types import BlockTypes
-from src.functionality.parent_node import ParentNode
-from src.functionality.inline_markdown import InlineMarkdown
+from src.enums.block_types import BlockTypes
+from src.model.parent_node import ParentNode
+from src.conversion.inline_markdown import InlineMarkdown
 
 
 class BlockMarkdown:
