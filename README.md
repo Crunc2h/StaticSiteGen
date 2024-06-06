@@ -1,1 +1,1 @@
-# A simple static site generator that can convert markdown files to hmtl
+# A simple md to html static site generator
